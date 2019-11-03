@@ -51,32 +51,18 @@ class GameFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
 
-        binding.correctButton.setOnClickListener {
-            viewModel.onCorrect()
-        }
-        binding.skipButton.setOnClickListener {
-            viewModel.onSkip()
-        }
+        binding.gameViewModel = viewModel
+        binding.lifecycleOwner = this
 
-        viewModel.score.observe(this, Observer { newScore ->
-            binding.scoreText.text = newScore.toString()
-        })
-        viewModel.word.observe(this, Observer { newWord ->
-            binding.wordText.text = newWord
-        })
         viewModel.eventGameFinish.observe(this, Observer { finish ->
             if(finish){
                 gameFinished()
                 viewModel.onGameFinishComplete()
             }
         })
-        viewModel.currentTime.observe(this, Observer { newTime ->
-            binding.timerText.text = DateUtils.formatElapsedTime(newTime)
-        })
 
         return binding.root
     }
-
 
     /**
      * Called when the game is finished
@@ -84,7 +70,5 @@ class GameFragment : Fragment() {
     private fun gameFinished() {
         val action = GameFragmentDirections.actionGameToScore(viewModel.score.value ?: 0)
         findNavController(this).navigate(action)
-
     }
-
 }
