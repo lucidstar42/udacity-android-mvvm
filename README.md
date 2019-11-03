@@ -7,4 +7,4 @@
 - ViewModel / ViewModelFactory
 - LiveData / Data Binding
 - LiveData Encapsulation
-- LiveData Translation / Map
+- LiveData Transformation / Map
